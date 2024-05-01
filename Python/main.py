@@ -3,6 +3,7 @@ from prophet import Prophet
 import pandas as pd
 import datetime as dt
 from pydantic import BaseModel
+from json import loads
 
 app = FastAPI()
 
@@ -20,7 +21,7 @@ def load_model(city,
                year=now().strftime('%Y'),
                month=now().strftime('%m'),
                day=now().strftime('%m'),
-               periods=30,
+               periods=7,
                type='pm25'):
     try:
         year = int(year)
@@ -37,9 +38,11 @@ def load_model(city,
         model.fit(df)
         future = model.make_future_dataframe(periods=(periods))
         forecast = model.predict(future)
-        result = forecast[forecast['ds'] == dt.datetime(year, month, day)]
+        result = forecast.tail(periods)
         result.reset_index(drop=True, inplace=True)
-        return result[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
+        result['ds'] = result['ds'].dt.strftime('%Y-%m-%d')
+        result = result[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
+        return loads(result.to_json(orient="records"))
     except Exception as e:
         print(str(e))
     return None
@@ -48,7 +51,11 @@ def load_model(city,
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/api/ai/{city}")
+@app.get("/predict/today/{city}")
+async def read_item(city: str):
+    return load_model(city)
+
+@app.get("/predict/{city}")
 async def read_item(city: str, req: Item):
     return load_model(city, req.year, req.month, req.day, req.periods, req.type)
 
