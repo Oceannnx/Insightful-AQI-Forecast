@@ -1,5 +1,6 @@
 import axios from 'axios';
-export const axioslib = axios.create({
-	baseURL: process.env.REACT_APP_API_URL || 'http://localhost:3001',
+
+export const AxiosLib = axios.create({
+	baseURL: import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:3000',
 	withCredentials: true
 });
