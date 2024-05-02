@@ -1,3 +1,8 @@
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
+<script>
+  import Chart from '../components/Chart.svelte';
+  export let data
+</script>
+
+<main>
+  <Chart {data} />
+</main>
