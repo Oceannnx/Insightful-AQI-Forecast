@@ -1,7 +1,7 @@
 <script lang='ts'>
     import { getLocation } from '$lib/Geolocation'
     import imgUrl from '../asset/bangkok_city_2.jpg'
-	import Content from '../components/Content.svelte';
+	import Content from '../components/Content.layout.svelte';
 	import Sidebar from '../components/Sidebar.svelte';
     export let data
     
