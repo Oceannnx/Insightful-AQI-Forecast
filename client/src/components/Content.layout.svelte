@@ -1,8 +1,10 @@
 <script lang="ts">
-	import SelectionCity from "./SelectionCity.svelte";
-
-    let city:string
+	import SelectionCity from './SelectionCity.svelte';
+	import TodayAqi from './TodayAqi.svelte';
+	let city: string;
 </script>
 
 <SelectionCity bind:selectCity={city} />
-<h1>{city}</h1>
+<div class="flex justify-center">
+	<TodayAqi {city} />
+</div>
