@@ -51,14 +51,6 @@ def load_model(city,
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/predict/today/{city}")
-async def read_item(city: str):
+@app.get("/predict/weekly/{city}")
+async def predict_weekly(city: str):
     return load_model(city)
-
-@app.get("/predict/{city}")
-async def read_item(city: str, req: Item):
-    return load_model(city, req.year, req.month, req.day, req.periods, req.type)
-
-# @app.get("/api/ai/{city}")
-# async def read_item(city: str):
-#     return load_model(city);
