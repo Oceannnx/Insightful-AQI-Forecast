@@ -9,7 +9,7 @@
 
 	const fetchWeeklyPredict = async () => {
 		try {
-			const result = await AxiosLib.get(`/predict/weekly/bangkok`);
+			const result = await AxiosLib.get(`/predict/weekly/${city}`);
 			if (result.status === 200) {
 				console.log(`${city} ${result.data}`);
 				return result.data;
@@ -18,6 +18,9 @@
 			console.log(error.message);
 		}
 	};
+	$: {
+		data = fetchWeeklyPredict();
+	}
 
 	$: if (city) {
 		data = fetchWeeklyPredict();
