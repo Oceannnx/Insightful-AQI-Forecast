@@ -76,3 +76,17 @@ async def predict_weekly(city: str):
 @app.get("/predict/range/{city}/{start}/{end}")
 async def predict_range(city: str, start: str, end: str):
     return load_model(city, start=dt.datetime.strptime(start, '%Y-%m-%d'), end=dt.datetime.strptime(end, '%Y-%m-%d'))
+
+@app.get("/history/{city}/{year}")
+async def history(city: str, year: str):
+    try:
+        data = pd.read_csv(f'..\\resource\\{city}-air-quality.csv', parse_dates=['date'], skipinitialspace=True)
+        data = data.sort_index()
+        data['date'] = data['date'].dt.strftime('%Y-%m-%d')
+        data = data[data['date'].str.contains(year)]
+        data.reset_index(drop=True, inplace=True)
+        data = data.sort_values(by='date')
+        return loads(data.to_json(orient="records"))
+    except Exception as e:
+        print(str(e))
+    return None
