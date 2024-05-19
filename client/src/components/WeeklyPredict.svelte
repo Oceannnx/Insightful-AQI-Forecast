@@ -53,7 +53,3 @@
 		<p>{error.message}</p>
 	{/await}
 </main>
-
-<main class="flex border w-3/4 h-1/4 p-10 flex-col">
-	<div>เสาร์, 19 พฤษภาคม</div>
-</main>
