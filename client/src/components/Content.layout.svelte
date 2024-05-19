@@ -1,4 +1,5 @@
 <script lang="ts">
+	import HistoryYearly from './HistoryYearly.svelte';
 	import PredictRange from './PredictRange.svelte';
 	import SelectionCity from './SelectionCity.svelte';
 	import TodayAqi from './TodayAqi.svelte';
@@ -11,4 +12,5 @@
 	<TodayAqi {city} />
 	<WeeklyPredict {city} />
 	<PredictRange {city} />
+	<HistoryYearly {city} />
 </div>
