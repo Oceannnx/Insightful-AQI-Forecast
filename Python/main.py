@@ -37,15 +37,12 @@ class Item(BaseModel):
     type: str
 
 def load_model(city,
-               year=now().strftime('%Y'),
-               month=now().strftime('%m'),
-               day=now().strftime('%m'),
-               periods=8,
-               type='pm25'):
+                start=now(),
+                end=now() + dt.timedelta(days=7),
+                type='pm25'
+                ):
     try:
-        year = int(year)
-        month = int(month)
-        day = int(day)
+        periods = (end - start).days
         periods = int(periods)
         data = pd.read_csv(f'..\\resource\\{city}-air-quality.csv', parse_dates=['date'], skipinitialspace=True)
         data = data.sort_index()
@@ -57,7 +54,8 @@ def load_model(city,
         model.fit(df)
         future = model.make_future_dataframe(periods=(periods))
         forecast = model.predict(future)
-        result = forecast.tail(periods-1)
+        result = forecast[(forecast['ds'] >= dt.datetime(start.year, start.month, start.day))]
+        result = result[forecast['ds'] <= dt.datetime(end.year, end.month, end.day)]
         result.reset_index(drop=True, inplace=True)
         result['ds'] = result['ds'].dt.strftime('%Y-%m-%d')
         result = result[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
@@ -66,6 +64,7 @@ def load_model(city,
         print(str(e))
     return None
 
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -73,3 +72,7 @@ async def root():
 @app.get("/predict/weekly/{city}")
 async def predict_weekly(city: str):
     return load_model(city)
+
+@app.get("/predict/range/{city}/{start}/{end}")
+async def predict_range(city: str, start: str, end: str):
+    return load_model(city, start=dt.datetime.strptime(start, '%Y-%m-%d'), end=dt.datetime.strptime(end, '%Y-%m-%d'))
