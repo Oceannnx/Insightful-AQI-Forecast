@@ -5,11 +5,13 @@
 
 	export let city: string;
 
+	let data: any;
+
 	const fetchWeeklyPredict = async () => {
 		try {
-			const result = await AxiosLib.get('/predict/weekly/bangkok');
+			const result = await AxiosLib.get(`/predict/weekly/bangkok`);
 			if (result.status === 200) {
-				console.log(result.data);
+				console.log(`${city} ${result.data}`);
 				return result.data;
 			}
 		} catch (error: any) {
@@ -18,7 +20,7 @@
 	};
 
 	$: if (city) {
-		fetchWeeklyPredict();
+		data = fetchWeeklyPredict();
 	}
 </script>
 
@@ -31,7 +33,7 @@
 			<p>ค่าสูงสุด</p>
 		</div>
 	</div>
-	{#await fetchWeeklyPredict()}
+	{#await data}
 		<p>Loading...</p>
 	{:then result}
 		{#each result as item}
