@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { AxiosLib } from '$lib/axios';
-	import axios from 'axios';
-	import { formatDate } from '../utils/formatDate';
+	import { formatDate } from '../utils/FormatDate';
 
 	export let city: string;
 
