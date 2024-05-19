@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PredictRange from './PredictRange.svelte';
 	import SelectionCity from './SelectionCity.svelte';
 	import TodayAqi from './TodayAqi.svelte';
 	import WeeklyPredict from './WeeklyPredict.svelte';
@@ -9,4 +10,5 @@
 <div class="flex flex-col items-center gap-10">
 	<TodayAqi {city} />
 	<WeeklyPredict {city} />
+	<PredictRange {city} />
 </div>
