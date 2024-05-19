@@ -40,7 +40,7 @@ def load_model(city,
                year=now().strftime('%Y'),
                month=now().strftime('%m'),
                day=now().strftime('%m'),
-               periods=7,
+               periods=8,
                type='pm25'):
     try:
         year = int(year)
@@ -57,7 +57,7 @@ def load_model(city,
         model.fit(df)
         future = model.make_future_dataframe(periods=(periods))
         forecast = model.predict(future)
-        result = forecast.tail(periods)
+        result = forecast.tail(periods-1)
         result.reset_index(drop=True, inplace=True)
         result['ds'] = result['ds'].dt.strftime('%Y-%m-%d')
         result = result[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
