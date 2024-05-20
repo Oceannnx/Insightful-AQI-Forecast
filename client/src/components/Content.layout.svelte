@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ColorLabel from './ColorLabel.svelte';
 	import HistoryYearly from './HistoryYearly.svelte';
 	import PredictRange from './PredictRange.svelte';
 	import SelectionCity from './SelectionCity.svelte';
@@ -13,4 +14,5 @@
 	<WeeklyPredict {city} />
 	<PredictRange {city} />
 	<HistoryYearly {city} />
+	<ColorLabel />
 </div>
