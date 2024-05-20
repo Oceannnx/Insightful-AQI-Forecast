@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { AxiosLib } from '$lib/axios';
+	import { colorAqi } from '../utils/colorAqi';
 	export let city;
 
 	let year: number = new Date().getFullYear();
@@ -33,7 +34,7 @@
 	}
 </script>
 
-<main class="flex border w-3/4 p-10 flex-col bg-amber-600">
+<main class="flex rounded-md bg-neutral-300 drop-shadow-2xl w-3/4 p-10 flex-col">
 	<div class="grid grid-cols-2">
 		<div class="w-full">
 			<h1 class="text-3xl">ประวัติคุณภาพอากาศ</h1>
@@ -55,14 +56,16 @@
 		</div>
 	</div>
 	{#await data}
-		<p>Loading...</p>
+		<div class="h-72 bg-slate-400 grid place-items-center">
+			<div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-slate-300"></div>
+		</div>
 	{:then data}
 		{#if data}
 			<div class="grid grid-cols-2 gap-2 py-5">
 				{#each data as item}
 					<!-- svelte-ignore a11y-interactive-supports-focus -->
 					{#if new Date(item.date).getMonth() + 1 === month}
-						<div class="flex justify-between p-1 border rounded-sm">
+						<div class="flex justify-between p-1 border rounded-sm {colorAqi(item.pm25)}">
 							<p>{item.date}</p>
 							<p>{item.pm25}</p>
 						</div>
@@ -76,3 +79,17 @@
 		<p>{error.message}</p>
 	{/await}
 </main>
+
+<style>
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+	input[type='number'] {
+		-moz-appearance: textfield;
+	}
+</style>

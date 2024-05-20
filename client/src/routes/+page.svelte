@@ -26,7 +26,7 @@
 	{:else}
 		<main class="w-screen h-auto grid grid-cols-6">
 			<div class="bg-amber-700 col-span-1">
-				<Sidebar />
+				<div><Sidebar /></div>
 			</div>
 			<div class="col-span-5 bg-neutral-300">
 				<Content />

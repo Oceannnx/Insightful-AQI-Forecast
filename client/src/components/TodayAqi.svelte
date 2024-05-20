@@ -3,10 +3,10 @@
 	import { formatAqiApi } from '../utils/formatAqiApi';
 	import { labelAqiQuality } from '../utils/labelAqiQuality';
 	import { formatDate } from '../utils/formatDate';
+	import { colorAqi } from '../utils/colorAqi';
 
 	export let city;
 	let data: any;
-	let main: any;
 	const fetchTodayAqi = async () => {
 		try {
 			const result = await axios.get(
@@ -20,42 +20,36 @@
 
 	$: if (city) {
 		data = fetchTodayAqi();
-		if (main) {
-			if (data) {
-				main.classList.remove('border-red-700');
-				main.classList.add('border-green-700', 'bg-green-200', 'text-green-700');
-			}
-		}
 	}
 </script>
 
-<main bind:this={main} class="flex flex-col border w-3/4 h-1/4 p-10">
-	<div class="text-3xl pb-6">คุณภาพอากาศวันนี้</div>
-	<div class="flex">
-		{#await data}
-			<h1 class="border w-auto h-auto flex items-center justify-center">Loading...</h1>
-			<h2>Loading...</h2>
-			<h3>Loading...</h3>
-		{:then data}
-			{#if data}
-				<h1
-					class="border border-amber-700 w-1/4 flex items-center justify-center text-6xl flex-col"
-				>
+<main class="w-3/4 h-1/4">
+	{#await data}
+		<div class="h-72 bg-slate-400 grid place-items-center">
+			<div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-slate-300"></div>
+		</div>
+	{:then data}
+		{#if data}
+			<div class="rounded-md bg-neutral-300 drop-shadow-2xl flex p-10 h-72">
+				<h1 class="w-1/4 flex items-center justify-center text-6xl flex-col {colorAqi(data.aqi)}">
 					{data.aqi}
 					<div>{labelAqiQuality(data.aqi)}</div>
 				</h1>
 				<div class="px-5">
-					<h2 class="text-2xl">{city.label}</h2>
-					<h3>Latest update : {formatDate(data.time.s)}</h3>
+					<h2 class="text-3xl">{city.label}</h2>
+					<h3>
+						อัพเดตล่าสุด : {formatDate(data.time.s)},
+						{new Date(data.time.s).getHours()}:00 น.
+					</h3>
 					<div class="flex justify-center">
-						<div class="px-4">
+						<div class="px-4 flex flex-col gap-2">
 							<p>CO<sub>2</sub> : {data.iaqi.co} ppm</p>
 							<p>NO<sub>2</sub> : {data.iaqi.no2} ppb</p>
 							<p>O<sub>3</sub> : {data.iaqi.o3} ppb</p>
 							<p>PM 1.0 : {data.iaqi.pm10} ไมโครกรัมต่อลูกบาศก์เมตร</p>
 							<p>PM 2.5 : {data.iaqi.pm25} ไมโครกรัมต่อลูกบาศก์เมตร</p>
 						</div>
-						<div class="px-4">
+						<div class="px-4 flex flex-col gap-2">
 							<p>SO<sub>2</sub> : {data.iaqi.so2} ppb</p>
 							<p>Temperature : {data.iaqi.t} เซลเซียส</p>
 							<p>Humidity : {data.iaqi.h} เปอร์เซ็น</p>
@@ -63,11 +57,11 @@
 						</div>
 					</div>
 				</div>
-			{:else}
-				<h1>No data</h1>
-			{/if}
-		{:catch error}
-			<h1>{error.message}</h1>
-		{/await}
-	</div>
+			</div>
+		{:else}
+			<h1>No data</h1>
+		{/if}
+	{:catch error}
+		<h1>{error.message}</h1>
+	{/await}
 </main>

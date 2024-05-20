@@ -9,7 +9,7 @@
 </script>
 
 <SelectionCity bind:selectCity={city} />
-<div class="flex flex-col items-center gap-10">
+<div class="flex flex-col items-center gap-10 py-20">
 	<TodayAqi {city} />
 	<WeeklyPredict {city} />
 	<PredictRange {city} />

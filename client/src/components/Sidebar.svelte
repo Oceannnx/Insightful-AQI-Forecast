@@ -3,7 +3,7 @@
 	let scrollY = 0;
 </script>
 
-<main class="h-full flex flex-col items-center">
+<main class="flex flex-col items-center bg-fuchsia-800">
 	<img class="w-3/4" src={logo} alt="logo" />
 	<div class="w-3/4 h-fit bg-red-700 flex flex-col items-center">
 		{#each Array(5) as _, i}

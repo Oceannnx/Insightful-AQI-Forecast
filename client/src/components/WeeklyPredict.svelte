@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { AxiosLib } from '$lib/axios';
-	import { formatDate } from '../utils/FormatDate';
+	import { colorAqi } from '../utils/colorAqi';
+	import { formatDate } from '../utils/formatDate';
 
 	export let city;
 
@@ -25,30 +26,36 @@
 	}
 </script>
 
-<main class="flex border w-3/4 h-1/4 flex-col">
+<main class="flex rounded-md w-3/4 h-1/4 flex-col bg-neutral-300 drop-shadow-2xl">
 	<div class="text-3xl px-10 py-5">พยากรณ์คุณภาพอากาศ 1 อาทิตย์</div>
-	<div class="p-5 px-10">
-		<div class="grid grid-cols-3">
+	<div class="py-5 px-10 pb-10">
+		<div class="grid grid-cols-3 pb-5">
 			<p>วันที่</p>
-			<p>ค่าเฉลี่ย AQI</p>
+			<p class="grid place-content-center">ค่าเฉลี่ย AQI</p>
 			<div class="grid grid-cols-2">
-				<p>ค่าต่ำสุด</p>
-				<p>ค่าสูงสุด</p>
+				<p class="grid place-content-center">ค่าต่ำสุด</p>
+				<p class="grid place-content-center">ค่าสูงสุด</p>
 			</div>
 		</div>
 		{#await data}
-			<p>Loading...</p>
+			<div class="h-72 bg-slate-400 grid place-items-center">
+				<div
+					class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-slate-300"
+				></div>
+			</div>
 		{:then result}
-			{#each result as item}
-				<div class="grid grid-cols-3">
-					<p>{formatDate(item.ds)}</p>
-					<p>{Math.ceil(item.yhat)}</p>
-					<div class="grid grid-cols-2">
-						<p>{Math.ceil(item.yhat_lower)}</p>
-						<p>{Math.ceil(item.yhat_upper)}</p>
+			<div class="flex flex-col gap-2">
+				{#each result as item}
+					<div class="grid grid-cols-3 p-2 rounded-md {colorAqi(item.yhat)}">
+						<p>{formatDate(item.ds)}</p>
+						<p class="grid place-content-center">{Math.ceil(item.yhat)}</p>
+						<div class="grid grid-cols-2">
+							<p class="grid place-content-center">{Math.ceil(item.yhat_lower)}</p>
+							<p class="grid place-content-center">{Math.ceil(item.yhat_upper)}</p>
+						</div>
 					</div>
-				</div>
-			{/each}
+				{/each}
+			</div>
 		{:catch error}
 			<p>{error.message}</p>
 		{/await}
