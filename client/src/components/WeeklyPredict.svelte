@@ -25,29 +25,32 @@
 	}
 </script>
 
-<main class="flex border w-3/4 h-1/4 p-10 flex-col">
-	<div class="grid grid-cols-3">
-		<p>วันที่</p>
-		<p>ค่าเฉลี่ย AQI</p>
-		<div class="grid grid-cols-2">
-			<p>ค่าต่ำสุด</p>
-			<p>ค่าสูงสุด</p>
-		</div>
-	</div>
-	{#await data}
-		<p>Loading...</p>
-	{:then result}
-		{#each result as item}
-			<div class="grid grid-cols-3">
-				<p>{formatDate(item.ds)}</p>
-				<p>{Math.ceil(item.yhat)}</p>
-				<div class="grid grid-cols-2">
-					<p>{Math.ceil(item.yhat_lower)}</p>
-					<p>{Math.ceil(item.yhat_upper)}</p>
-				</div>
+<main class="flex border w-3/4 h-1/4 flex-col">
+	<div class="text-3xl px-10 py-5">พยากรณ์คุณภาพอากาศ 1 อาทิตย์</div>
+	<div class="p-5 px-10">
+		<div class="grid grid-cols-3">
+			<p>วันที่</p>
+			<p>ค่าเฉลี่ย AQI</p>
+			<div class="grid grid-cols-2">
+				<p>ค่าต่ำสุด</p>
+				<p>ค่าสูงสุด</p>
 			</div>
-		{/each}
-	{:catch error}
-		<p>{error.message}</p>
-	{/await}
+		</div>
+		{#await data}
+			<p>Loading...</p>
+		{:then result}
+			{#each result as item}
+				<div class="grid grid-cols-3">
+					<p>{formatDate(item.ds)}</p>
+					<p>{Math.ceil(item.yhat)}</p>
+					<div class="grid grid-cols-2">
+						<p>{Math.ceil(item.yhat_lower)}</p>
+						<p>{Math.ceil(item.yhat_upper)}</p>
+					</div>
+				</div>
+			{/each}
+		{:catch error}
+			<p>{error.message}</p>
+		{/await}
+	</div>
 </main>

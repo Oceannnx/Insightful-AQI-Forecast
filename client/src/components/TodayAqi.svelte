@@ -29,40 +29,45 @@
 	}
 </script>
 
-<main bind:this={main} class="flex border w-3/4 h-1/4 p-10">
-	{#await data}
-		<h1 class="border w-auto h-auto flex items-center justify-center">Loading...</h1>
-		<h2>Loading...</h2>
-		<h3>Loading...</h3>
-	{:then data}
-		{#if data}
-			<h1 class="border border-amber-700 w-1/4 flex items-center justify-center text-6xl flex-col">
-				{data.aqi}
-				<div>{labelAqiQuality(data.aqi)}</div>
-			</h1>
-			<div class="px-5">
-				<h2 class="text-2xl">{city.label}</h2>
-				<h3>Latest update : {formatDate(data.time.s)}</h3>
-				<div class="flex justify-center">
-					<div class="px-4">
-						<p>CO<sub>2</sub> : {data.iaqi.co} ppm</p>
-						<p>NO<sub>2</sub> : {data.iaqi.no2} ppb</p>
-						<p>O<sub>3</sub> : {data.iaqi.o3} ppb</p>
-						<p>PM 1.0 : {data.iaqi.pm10} ไมโครกรัมต่อลูกบาศก์เมตร</p>
-						<p>PM 2.5 : {data.iaqi.pm25} ไมโครกรัมต่อลูกบาศก์เมตร</p>
-					</div>
-					<div class="px-4">
-						<p>SO<sub>2</sub> : {data.iaqi.so2} ppb</p>
-						<p>Temperature : {data.iaqi.t} เซลเซียส</p>
-						<p>Humidity : {data.iaqi.h} เปอร์เซ็น</p>
-						<p>Wind : {data.iaqi.w} กิโลเมตรต่อชั่วโมง</p>
+<main bind:this={main} class="flex flex-col border w-3/4 h-1/4 p-10">
+	<div class="text-3xl pb-6">คุณภาพอากาศวันนี้</div>
+	<div class="flex">
+		{#await data}
+			<h1 class="border w-auto h-auto flex items-center justify-center">Loading...</h1>
+			<h2>Loading...</h2>
+			<h3>Loading...</h3>
+		{:then data}
+			{#if data}
+				<h1
+					class="border border-amber-700 w-1/4 flex items-center justify-center text-6xl flex-col"
+				>
+					{data.aqi}
+					<div>{labelAqiQuality(data.aqi)}</div>
+				</h1>
+				<div class="px-5">
+					<h2 class="text-2xl">{city.label}</h2>
+					<h3>Latest update : {formatDate(data.time.s)}</h3>
+					<div class="flex justify-center">
+						<div class="px-4">
+							<p>CO<sub>2</sub> : {data.iaqi.co} ppm</p>
+							<p>NO<sub>2</sub> : {data.iaqi.no2} ppb</p>
+							<p>O<sub>3</sub> : {data.iaqi.o3} ppb</p>
+							<p>PM 1.0 : {data.iaqi.pm10} ไมโครกรัมต่อลูกบาศก์เมตร</p>
+							<p>PM 2.5 : {data.iaqi.pm25} ไมโครกรัมต่อลูกบาศก์เมตร</p>
+						</div>
+						<div class="px-4">
+							<p>SO<sub>2</sub> : {data.iaqi.so2} ppb</p>
+							<p>Temperature : {data.iaqi.t} เซลเซียส</p>
+							<p>Humidity : {data.iaqi.h} เปอร์เซ็น</p>
+							<p>Wind : {data.iaqi.w} กิโลเมตรต่อชั่วโมง</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		{:else}
-			<h1>No data</h1>
-		{/if}
-	{:catch error}
-		<h1>{error.message}</h1>
-	{/await}
+			{:else}
+				<h1>No data</h1>
+			{/if}
+		{:catch error}
+			<h1>{error.message}</h1>
+		{/await}
+	</div>
 </main>

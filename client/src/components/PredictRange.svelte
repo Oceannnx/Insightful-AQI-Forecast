@@ -22,7 +22,8 @@
 	}
 </script>
 
-<main class="flex border w-3/4 h-96 p-10 flex-col bg-amber-600">
+<main class="flex border w-3/4 h-fit max-h-96 p-10 flex-col bg-amber-600">
+	<div class="text-3xl">เลือกช่วงพยากรณ์</div>
 	<div class="flex justify-end">
 		<input type="date" bind:value={startDate} />
 		<input type="date" bind:value={endDate} />
@@ -33,7 +34,7 @@
 			<p>Loading...</p>
 		{:then data}
 			{#if data}
-				<div class="h-72 overflow-y-auto bg-red-600">
+				<div class="h-fit max-h-72 overflow-y-auto bg-red-600">
 					{#each data as item}
 						<div class="grid grid-cols-3">
 							<p>{formatDate(item.ds)}</p>

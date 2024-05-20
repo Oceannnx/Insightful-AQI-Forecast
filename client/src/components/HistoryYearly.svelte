@@ -2,7 +2,7 @@
 	import { AxiosLib } from '$lib/axios';
 	export let city;
 
-	let year: number = new Date().getFullYear() - 1;
+	let year: number = new Date().getFullYear();
 	let data: any;
 	let monthTH = [
 		{ monthId: 1, month: 'มกราคม' },
@@ -33,30 +33,36 @@
 	}
 </script>
 
-<main class="flex border w-3/4 h-96 p-10 flex-col bg-amber-600">
-	<h1 class="text-3xl text-center">Historical AQI Data</h1>
-	<h2 class="text-2xl text-center">{city.label}</h2>
-	<select bind:value={month}>
-		{#each monthTH as month (month.monthId)}
-			<option value={month.monthId}>{month.month}</option>
-		{/each}
-	</select>
-	<input
-		type="number"
-		min="2017"
-		max={new Date().getFullYear()}
-		bind:value={year}
-		class="w-1/4 p-2 border border-black"
-	/>
+<main class="flex border w-3/4 p-10 flex-col bg-amber-600">
+	<div class="grid grid-cols-2">
+		<div class="w-full">
+			<h1 class="text-3xl">ประวัติคุณภาพอากาศ</h1>
+			<h2 class="text-2xl">{city.label}</h2>
+		</div>
+		<div class="flex justify-end items-center gap-5 px-5">
+			<select bind:value={month} class="p-2 h-fit rounded-md">
+				{#each monthTH as month (month.monthId)}
+					<option value={month.monthId}>{month.month}</option>
+				{/each}
+			</select>
+			<input
+				type="number"
+				min="2017"
+				max={new Date().getFullYear()}
+				bind:value={year}
+				class="h-fit p-2 border border-black rounded-md"
+			/>
+		</div>
+	</div>
 	{#await data}
 		<p>Loading...</p>
 	{:then data}
 		{#if data}
-			<div class="flex flex-col">
+			<div class="grid grid-cols-2 gap-2 py-5">
 				{#each data as item}
 					<!-- svelte-ignore a11y-interactive-supports-focus -->
 					{#if new Date(item.date).getMonth() + 1 === month}
-						<div class="flex justify-between">
+						<div class="flex justify-between p-1 border rounded-sm">
 							<p>{item.date}</p>
 							<p>{item.pm25}</p>
 						</div>
