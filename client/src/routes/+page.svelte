@@ -14,9 +14,9 @@
 <main class="overflow-x-hidden">
 	{#if !data.visited}
 		<body>
-			<img class="w-screen -z-10 absolute" src={imgUrl} alt="Bangkok City" />
+			<img class="w-screen h-screen -z-10 absolute" src={imgUrl} alt="Bangkok City" />
 			<div
-				class="w-fit h-screen flex flex-col justify-center items-start p-10 bg-slate-400 opacity-80 trapezoid"
+				class="w-fit h-screen flex flex-col justify-center items-start p-10 bg-slate-400 opacity-80"
 			>
 				<h1 class="text-6xl py-3">Insightful AQI Forecast</h1>
 				<div class="py-6">
