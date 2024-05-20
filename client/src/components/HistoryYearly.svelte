@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AxiosLib } from '$lib/axios';
-	export let city: string;
+	export let city;
 
 	let year: number = new Date().getFullYear() - 1;
 	let data: any;
@@ -21,7 +21,7 @@
 	let month: number = 1;
 
 	const fetchHistoryYearlyData = async () => {
-		const response = await AxiosLib.get(`/history/${city}/${year}`);
+		const response = await AxiosLib.get(`/history/${city.id}/${year}`);
 
 		return response.data;
 	};
@@ -35,7 +35,7 @@
 
 <main class="flex border w-3/4 h-96 p-10 flex-col bg-amber-600">
 	<h1 class="text-3xl text-center">Historical AQI Data</h1>
-	<h2 class="text-2xl text-center">{city}</h2>
+	<h2 class="text-2xl text-center">{city.label}</h2>
 	<select bind:value={month}>
 		{#each monthTH as month (month.monthId)}
 			<option value={month.monthId}>{month.month}</option>

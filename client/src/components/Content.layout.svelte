@@ -4,7 +4,7 @@
 	import SelectionCity from './SelectionCity.svelte';
 	import TodayAqi from './TodayAqi.svelte';
 	import WeeklyPredict from './WeeklyPredict.svelte';
-	let city: string;
+	let city = { id: 'Bangkok', label: 'กรุงเทพ' };
 </script>
 
 <SelectionCity bind:selectCity={city} />

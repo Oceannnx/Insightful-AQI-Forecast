@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { AxiosLib } from '$lib/axios';
-	import { formatDate } from '../utils/FormatDate';
+	import { formatDate } from '../utils/formatDate';
 
-	export let city: string;
+	export let city;
 	let data: any;
 	let toggledate: boolean = false;
 
@@ -10,7 +10,7 @@
 	let endDate: any = '2024-04-20';
 
 	const fetchPredictRangeData = async () => {
-		const response = await AxiosLib.get(`/predict/range/${city}/${startDate}/${endDate}`);
+		const response = await AxiosLib.get(`/predict/range/${city.id}/${startDate}/${endDate}`);
 		toggledate = !toggledate;
 		return response.data;
 	};

@@ -2,13 +2,13 @@
 	import { AxiosLib } from '$lib/axios';
 	import { formatDate } from '../utils/FormatDate';
 
-	export let city: string;
+	export let city;
 
 	let data: any;
 
 	const fetchWeeklyPredict = async () => {
 		try {
-			const result = await AxiosLib.get(`/predict/weekly/${city}`);
+			const result = await AxiosLib.get(`/predict/weekly/${city.id}`);
 			if (result.status === 200) {
 				return result.data;
 			}

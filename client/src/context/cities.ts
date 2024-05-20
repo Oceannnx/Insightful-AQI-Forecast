@@ -1,1 +1,1 @@
-export const cities = ['Bangkok', 'Chiang-Mai', 'Nonthaburi', 'samutprakan'];
+export const cities = [{id:'Bangkok',label:'กรุงเทพ'}, {id:'Chiang-Mai',label:'เชียงใหม่'}, {id:'Nonthaburi',label:'นนทบุรี'}, {id:'samutprakan',label:'สมุทรปราการ'}];
