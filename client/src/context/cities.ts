@@ -1,1 +1,1 @@
-export const cities = ['Bangkok', 'Chiang-Mai', 'Nonthaburi'];
+export const cities = ['Bangkok', 'Chiang-Mai', 'Nonthaburi', 'samutprakan'];
