@@ -7,14 +7,19 @@
 	let data: any;
 	let toggledate: boolean = false;
 
-	let startDate: any = '2024-04-10';
-	let endDate: any = '2024-04-20';
+	let startDate: any = new Date().toISOString().split('T')[0];
+	let endDate: any;
 
 	const fetchPredictRangeData = async () => {
 		const response = await AxiosLib.get(`/predict/range/${city.id}/${startDate}/${endDate}`);
 		toggledate = !toggledate;
 		return response.data;
 	};
+	$: {
+		let today = new Date();
+		today.setDate(new Date().getDate() + 7);
+		endDate = today.toISOString().split('T')[0];
+	}
 	$: if (toggledate) {
 		data = fetchPredictRangeData();
 	}
