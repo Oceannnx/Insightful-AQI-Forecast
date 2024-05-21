@@ -38,6 +38,6 @@ export const colorLabel = [{
     color: 'bg-purple-500',
     label: 'อันตรายมาก',
     healthImplications: 'ทุกคนอาจได้รับผลกระทบด้านสุขภาพที่รุนแรงมากขึ้น',
-    cautionaryStatement: 'ทุกตนควรหลีกเลี่ยงการทำกิจกรรมนอกบ้าน'
+    cautionaryStatement: 'ทุกคนควรหลีกเลี่ยงการทำกิจกรรมนอกบ้าน'
 }
 ]
