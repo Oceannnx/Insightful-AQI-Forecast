@@ -31,7 +31,12 @@
 <main class="flex rounded-md bg-neutral-300 drop-shadow-2xl w-3/4 h-fit p-10 flex-col">
 	<div class="text-3xl">เลือกช่วงเวลาพยากรณ์</div>
 	<div class="flex justify-end gap-5">
-		<input class="p-2 rounded-md" type="date" bind:value={startDate} />
+		<input
+			class="p-2 rounded-md"
+			type="date"
+			min={new Date().toISOString().split('T')[0]}
+			bind:value={startDate}
+		/>
 		<input class="p-2 rounded-md" type="date" bind:value={endDate} />
 		<input
 			class="p-2 px-5 border rounded-md"
