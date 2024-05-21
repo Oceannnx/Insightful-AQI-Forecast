@@ -30,7 +30,7 @@
 	<div class="text-3xl px-10 py-5">พยากรณ์คุณภาพอากาศ 1 อาทิตย์</div>
 	<div class="py-5 px-10 pb-10">
 		<div class="grid grid-cols-3 pb-5">
-			<p>วันที่</p>
+			<p class="grid place-content-center">วันที่</p>
 			<p class="grid place-content-center">ค่าเฉลี่ย AQI</p>
 			<div class="grid grid-cols-2">
 				<p class="grid place-content-center">ค่าต่ำสุด</p>
@@ -46,12 +46,18 @@
 		{:then result}
 			<div class="flex flex-col gap-2">
 				{#each result as item}
-					<div class="grid grid-cols-3 p-2 rounded-md {colorAqi(item.yhat)}">
-						<p>{formatDate(item.ds)}</p>
-						<p class="grid place-content-center">{Math.ceil(item.yhat)}</p>
+					<div class="grid grid-cols-3 rounded-md {colorAqi(item.yhat)}">
+						<p class="grid place-content-center">{formatDate(item.ds)}</p>
+						<p class="grid place-content-center p-2 {colorAqi(item.yhat)}">
+							{Math.ceil(item.yhat)}
+						</p>
 						<div class="grid grid-cols-2">
-							<p class="grid place-content-center">{Math.ceil(item.yhat_lower)}</p>
-							<p class="grid place-content-center">{Math.ceil(item.yhat_upper)}</p>
+							<p class="grid place-content-center {colorAqi(item.yhat_lower)}">
+								{Math.ceil(item.yhat_lower)}
+							</p>
+							<p class="grid place-content-center {colorAqi(item.yhat_upper)}">
+								{Math.ceil(item.yhat_upper)}
+							</p>
 						</div>
 					</div>
 				{/each}
