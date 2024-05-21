@@ -19,7 +19,7 @@
 		{ monthId: 11, month: 'พฤศจิกายน' },
 		{ monthId: 12, month: 'ธันวาคม' }
 	];
-	let month: number = 1;
+	let month: number = new Date().getMonth();
 
 	const fetchHistoryYearlyData = async () => {
 		const response = await AxiosLib.get(`/history/${city.id}/${year}`);
