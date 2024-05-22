@@ -4,9 +4,21 @@ from prophet import Prophet
 import pandas as pd
 import datetime as dt
 from pydantic import BaseModel
+import pymongo
+import requests
 from json import loads
+from dotenv import load_dotenv
+import os
+
 
 app = FastAPI()
+
+load_dotenv()
+
+MONGODB_URL = os.getenv('MONGODB_URL')
+
+client = pymongo.MongoClient(MONGODB_URL)
+db = client.get_database('InsightfulAqiForecast')
 
 origins = [
     "http://localhost:5173",
@@ -23,13 +35,6 @@ app.add_middleware(
 
 def now():
     return dt.datetime.now()
-
-class Item(BaseModel):
-    year: str
-    month: str
-    day: str
-    periods: int
-    type: str
 
 def load_model(city,
                 start=now(),
@@ -75,7 +80,8 @@ async def predict_range(city: str, start: str, end: str):
 @app.get("/history/{city}/{year}")
 async def history(city: str, year: str):
     try:
-        data = pd.read_csv(f'..\\resource\\{city}-air-quality.csv', parse_dates=['date'], skipinitialspace=True)
+        addDataToDB(city)
+        data = pd.read_csv(fetchDataFromDB(city), parse_dates=['date'], skipinitialspace=True)
         data = data.sort_index()
         data['date'] = data['date'].dt.strftime('%Y-%m-%d')
         data = data[data['date'].str.contains(year)]
@@ -85,3 +91,47 @@ async def history(city: str, year: str):
     except Exception as e:
         print(str(e))
     return None
+
+def addDataToDB(city:str):
+    try:
+        collection = db[city]
+        find = collection.find_one({"date":dt.datetime.now().strftime('%Y-%m-%d')})
+        if find:
+            return False
+        result = requests.get(f'https://api.waqi.info/feed/{city}/?token=3ad15d8e229a5120ed11e38c946922b0b9a42ac7')
+        result = result.json()
+        date = dt.datetime.now().strftime('%Y-%m-%d')
+        pm25 = result['data']['iaqi']['pm25']['v']
+        pm10 = result['data']['iaqi']['pm10']['v']
+        o3 = result['data']['iaqi']['o3']['v']
+        no2 = result['data']['iaqi']['no2']['v']
+        so2 = result['data']['iaqi']['so2']['v']
+        Data = {
+            "date":date,
+            "pm25":pm25,
+            "pm10":pm10,
+            "o3":o3,
+            "no2":no2,
+            "so2":so2
+        }
+        collection.insert_one(Data)
+    except Exception as e:
+        print(str(e))
+
+def fetchDataFromDB(city:str):
+    try:
+        collection = db[city]
+        result = collection.find()
+        data = list(result)
+        if data:
+            df = pd.DataFrame(data)
+        if '_id' in df.columns:
+            df.drop('_id', axis=1, inplace=True)
+        return loads(df.to_csv(orient="records"))
+    except Exception as e:
+        return str(e)
+
+@app.get("/test")
+async def test():
+    addDataToDB('bangkok')
+    return fetchDataFromDB('bangkok')
