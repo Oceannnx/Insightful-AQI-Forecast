@@ -44,8 +44,8 @@ def load_model(city,
     try:
         periods = (end - start).days
         periods = int(periods)
-        data = pd.read_csv(f'..\\resource\\{city}-air-quality.csv', parse_dates=['date'], skipinitialspace=True)
-        data = data.sort_index()
+        city = city.lower()
+        data = fetchDataFromDB(city)
         y_col = type
         data.dropna(subset=[y_col], inplace=True)
         df = data[['date', y_col]]
@@ -81,7 +81,8 @@ async def predict_range(city: str, start: str, end: str):
 async def history(city: str, year: str):
     try:
         addDataToDB(city)
-        data = pd.read_csv(fetchDataFromDB(city), parse_dates=['date'], skipinitialspace=True)
+        city = city.lower()
+        data = fetchDataFromDB(city)
         data = data.sort_index()
         data['date'] = data['date'].dt.strftime('%Y-%m-%d')
         data = data[data['date'].str.contains(year)]
@@ -96,8 +97,8 @@ def addDataToDB(city:str):
     try:
         collection = db[city]
         find = collection.find_one({"date":dt.datetime.now().strftime('%Y-%m-%d')})
-        if find:
-            return False
+        # if find:
+        #     return False
         result = requests.get(f'https://api.waqi.info/feed/{city}/?token=3ad15d8e229a5120ed11e38c946922b0b9a42ac7')
         result = result.json()
         date = dt.datetime.now().strftime('%Y-%m-%d')
@@ -121,15 +122,15 @@ def addDataToDB(city:str):
 def fetchDataFromDB(city:str):
     try:
         collection = db[city]
-        result = collection.find()
-        data = list(result)
-        if data:
-            df = pd.DataFrame(data)
-        if '_id' in df.columns:
-            df.drop('_id', axis=1, inplace=True)
-        return loads(df.to_csv(orient="records"))
+        data = collection.find()
+        df = pd.DataFrame(list(data))
+        df.drop(columns=['_id'], inplace=True)
+        df['date'] = pd.to_datetime(df['date'])
+        df = df.sort_values(by='date')
+        return df
     except Exception as e:
-        return str(e)
+        print(str(e))
+    return None
 
 @app.get("/test")
 async def test():
