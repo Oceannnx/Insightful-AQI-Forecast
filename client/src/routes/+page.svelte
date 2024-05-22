@@ -9,7 +9,7 @@
 	};
 </script>
 
-<main class="overflow-x-hidden">
+<main class="overflow-x-hidden scroll-smooth">
 	{#if !data.visited}
 		<body>
 			<img class="w-screen h-screen -z-10 absolute blur" src={imgUrl} alt="Bangkok City" />
@@ -25,7 +25,7 @@
 		</body>
 	{:else}
 		<main class="w-screen h-auto grid grid-cols-6">
-			<div class=" bg-neutral-400 col-span-1">
+			<div class=" bg-sky-800 col-span-1">
 				<div><Sidebar /></div>
 			</div>
 			<div class="col-span-5 bg-neutral-100">
