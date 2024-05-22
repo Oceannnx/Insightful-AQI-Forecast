@@ -8,7 +8,7 @@
 <main class="flex flex-col items-center">
 	<div class="flex flex-col items-center fixed top-0">
 		<img class="w-3/4" src={logo} alt="logo" />
-		<div class="w-full h-fit flex flex-col items-center p-10">
+		<div class=" h-fit flex flex-col items-center p-10 w-fit">
 			{#each pageContent as item}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -22,7 +22,9 @@
 						scrollTo({ top: item.center, behavior: 'smooth' });
 					}}
 				>
-					<p class="hover:text-orange-400 text-center cursor-pointer">{@html item.label}</p>
+					<p class="hover:text-orange-400 text-center cursor-pointer drop-shadow-lg">
+						{@html item.label}
+					</p>
 				</div>
 			{/each}
 		</div>
