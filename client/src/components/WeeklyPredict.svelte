@@ -27,7 +27,7 @@
 </script>
 
 <main class="flex rounded-md w-3/4 h-1/4 flex-col bg-neutral-300 drop-shadow-2xl">
-	<div class="text-3xl px-10 py-5">พยากรณ์คุณภาพอากาศ 1 อาทิตย์</div>
+	<div class="text-3xl px-10 pt-5">พยากรณ์คุณภาพอากาศ 1 อาทิตย์</div>
 	<div class="py-5 px-10 pb-10">
 		<div class="grid grid-cols-3 pb-5">
 			<p class="grid place-content-center">วันที่</p>
