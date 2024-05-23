@@ -55,8 +55,8 @@
 						</div>
 						<div class="px-4 flex flex-col gap-2">
 							<p>SO<sub>2</sub> : {data.iaqi.so2} ppb</p>
-							<p>Temperature : {data.iaqi.t} เซลเซียส</p>
-							<p>Humidity : {data.iaqi.h} เปอร์เซ็น</p>
+							<p>อุณหภูมิ : {data.iaqi.t} เซลเซียส</p>
+							<p>ความชื้น : {data.iaqi.h} เปอร์เซ็น</p>
 							<p>Wind : {data.iaqi.w} กิโลเมตรต่อชั่วโมง</p>
 						</div>
 					</div>
