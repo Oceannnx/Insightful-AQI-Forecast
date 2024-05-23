@@ -42,9 +42,10 @@ def load_model(city,
                 type='pm25'
                 ):
     try:
-        periods = (end - start).days
+        periods = (end - now()).days +1
         periods = int(periods)
         city = city.lower()
+        addDataToDB(city)
         data = fetchDataFromDB(city)
         y_col = type
         data.dropna(subset=[y_col], inplace=True)
@@ -54,8 +55,9 @@ def load_model(city,
         model.fit(df)
         future = model.make_future_dataframe(periods=(periods))
         forecast = model.predict(future)
-        result = forecast[(forecast['ds'] >= dt.datetime(start.year, start.month, start.day))]
-        result = result[forecast['ds'] <= dt.datetime(end.year, end.month, end.day)]
+        result = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
+        result = result[result['ds'] >= start]
+        result = result[result['ds'] <= end]
         result.reset_index(drop=True, inplace=True)
         result['ds'] = result['ds'].dt.strftime('%Y-%m-%d')
         result = result[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
@@ -75,13 +77,13 @@ async def predict_weekly(city: str):
 
 @app.get("/predict/range/{city}/{start}/{end}")
 async def predict_range(city: str, start: str, end: str):
-    return load_model(city, start=dt.datetime.strptime(start, '%Y-%m-%d'), end=dt.datetime.strptime(end, '%Y-%m-%d'))
+    return load_model(city.lower(), start=dt.datetime.strptime(start, '%Y-%m-%d'), end=dt.datetime.strptime(end, '%Y-%m-%d'))
 
 @app.get("/history/{city}/{year}")
 async def history(city: str, year: str):
     try:
-        addDataToDB(city)
         city = city.lower()
+        addDataToDB(city)
         data = fetchDataFromDB(city)
         data = data.sort_index()
         data['date'] = data['date'].dt.strftime('%Y-%m-%d')
@@ -95,10 +97,11 @@ async def history(city: str, year: str):
 
 def addDataToDB(city:str):
     try:
+        city.lower()
         collection = db[city]
         find = collection.find_one({"date":dt.datetime.now().strftime('%Y-%m-%d')})
-        # if find:
-        #     return False
+        if find:
+            return False
         result = requests.get(f'https://api.waqi.info/feed/{city}/?token=3ad15d8e229a5120ed11e38c946922b0b9a42ac7')
         result = result.json()
         date = dt.datetime.now().strftime('%Y-%m-%d')
@@ -121,6 +124,7 @@ def addDataToDB(city:str):
 
 def fetchDataFromDB(city:str):
     try:
+        city.lower()
         collection = db[city]
         data = collection.find()
         df = pd.DataFrame(list(data))
