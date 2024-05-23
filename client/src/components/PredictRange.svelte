@@ -2,6 +2,7 @@
 	import { AxiosLib } from '$lib/axios';
 	import { formatDate } from '../utils/formatDate';
 	import { colorAqi } from '../utils/colorAqi';
+	import Swal from 'sweetalert2';
 
 	export let city;
 	let data: any;
@@ -11,6 +12,15 @@
 	let endDate: any;
 
 	const fetchPredictRangeData = async () => {
+		if (startDate > endDate) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Error',
+				text: 'โปรดเลือกช่วงเวลาให้ถูกต้อง'
+			});
+			startDate = new Date().toISOString().split('T')[0];
+			return;
+		}
 		const response = await AxiosLib.get(`/predict/range/${city.id}/${startDate}/${endDate}`);
 		toggledate = !toggledate;
 		return response.data;
@@ -37,11 +47,11 @@
 			min={new Date().toISOString().split('T')[0]}
 			bind:value={startDate}
 		/>
-		<input class="p-2 rounded-md" type="date" bind:value={endDate} />
+		<input class="p-2 rounded-md" type="date" min={startDate} bind:value={endDate} />
 		<input
 			class="p-2 px-5 border rounded-md"
 			type="button"
-			value="ทำนาย"
+			value="พยากรณ์"
 			on:click={fetchPredictRangeData}
 		/>
 	</div>
