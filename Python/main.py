@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from prophet import Prophet
 import pandas as pd
 import datetime as dt
-from pydantic import BaseModel
 import pymongo
 import requests
 from json import loads
@@ -23,6 +22,7 @@ db = client.get_database('InsightfulAqiForecast')
 origins = [
     "http://localhost:5173",
     "http://localhost:8080",
+    "https://insightful-aqi-forecast-8rx92cz0f-oceannnxs-projects.vercel.app/"
 ]
 
 app.add_middleware(
