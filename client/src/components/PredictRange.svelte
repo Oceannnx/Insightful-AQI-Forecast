@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { AxiosLib } from '$lib/axios';
-	import { formatDate } from '../utils/formatDate';
 	import { colorAqi } from '../utils/colorAqi';
 	import Swal from 'sweetalert2';
+	import { formatDate } from '../utils/formatDate';
 
 	export let city;
 	let data: any;
