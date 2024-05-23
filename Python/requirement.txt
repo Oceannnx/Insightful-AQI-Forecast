@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pandas
+prophet
+pymongo
+requests
+python-dotenv
