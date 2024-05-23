@@ -3,7 +3,7 @@
 	import { formatAqiApi } from '../utils/formatAqiApi';
 	import { labelAqiQuality } from '../utils/labelAqiQuality';
 	import { colorAqi } from '../utils/colorAqi';
-	import { formatDate } from '../context/formatDate';
+	import { formatDate } from '../utils/formatDate';
 
 	export let city;
 	let data: any;
