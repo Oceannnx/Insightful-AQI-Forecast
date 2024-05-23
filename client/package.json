@@ -37,6 +37,7 @@
 		"axios": "^1.6.8",
 		"chart.js": "^4.4.2",
 		"dayjs": "^1.11.11",
-		"svelte-chartjs": "^3.1.5"
+		"svelte-chartjs": "^3.1.5",
+		"sweetalert2": "^11.11.0"
 	}
 }
