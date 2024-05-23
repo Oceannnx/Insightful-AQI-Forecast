@@ -2,8 +2,8 @@
 	import axios from 'axios';
 	import { formatAqiApi } from '../utils/formatAqiApi';
 	import { labelAqiQuality } from '../utils/labelAqiQuality';
-	import { formatDate } from '../utils/formatDate';
 	import { colorAqi } from '../utils/colorAqi';
+	import { formatDate } from '../context/formatDate';
 
 	export let city;
 	let data: any;
