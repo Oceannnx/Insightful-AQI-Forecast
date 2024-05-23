@@ -11,7 +11,7 @@
 <main class="flex gap-6">
 	{#each cities as city}
 		<label
-			class="has-[:checked]:bg-neutral-50 hover:bg-neutral-200 cursor-pointer border text-md p-2 px-5 rounded-md checked:bg-black"
+			class="has-[:checked]:bg-neutral-50 hover:bg-neutral-100 bg cursor-pointer border text-md p-2 px-5 rounded-md checked:bg-black"
 		>
 			<input
 				type="radio"

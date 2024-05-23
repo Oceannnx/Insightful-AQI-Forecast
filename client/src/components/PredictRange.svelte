@@ -72,7 +72,7 @@
 			</div>
 		{:then data}
 			{#if data}
-				<div class="h-fit max-h-72 overflow-y-auto flex flex-col gap-2">
+				<div class="h-72 overflow-y-auto flex flex-col gap-2">
 					{#each data as item}
 						<div class="grid grid-cols-3 rounded-md {colorAqi(item.yhat)}">
 							<p class="grid place-content-center">{formatDate(item.ds)}</p>

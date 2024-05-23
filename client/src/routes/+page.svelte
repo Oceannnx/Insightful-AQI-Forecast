@@ -1,6 +1,7 @@
 <script lang="ts">
 	import imgUrl from '../asset/bangkok_city_2.jpg';
 	import Content from '../components/Content.layout.svelte';
+	import Footer from '../components/Footer.svelte';
 	import Sidebar from '../components/Sidebar.svelte';
 	export let data;
 
@@ -32,6 +33,7 @@
 				<Content />
 			</div>
 		</main>
+		<Footer></Footer>
 	{/if}
 </main>
 

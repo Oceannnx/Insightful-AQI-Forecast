@@ -31,7 +31,11 @@
 	{:then data}
 		{#if data}
 			<div class="rounded-md bg-neutral-300 drop-shadow-2xl flex p-10 h-72">
-				<h1 class="w-1/4 flex items-center justify-center text-6xl flex-col {colorAqi(data.aqi)}">
+				<h1
+					class="w-1/4 flex items-center justify-center text-6xl flex-col {colorAqi(
+						data.aqi
+					)} rounded-md"
+				>
 					{data.aqi}
 					<div>{labelAqiQuality(data.aqi)}</div>
 				</h1>
