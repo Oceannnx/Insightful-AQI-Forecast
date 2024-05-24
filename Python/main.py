@@ -36,65 +36,6 @@ app.add_middleware(
 def now():
     return dt.datetime.now()
 
-def load_model(city,
-                start=now(),
-                end=now() + dt.timedelta(days=7),
-                type='pm25'
-                ):
-    try:
-        periods = (end - now()).days +1
-        periods = int(periods)
-        city = city.lower()
-        addDataToDB(city)
-        data = fetchDataFromDB(city)
-        y_col = type
-        data.dropna(subset=[y_col], inplace=True)
-        df = data[['date', y_col]]
-        df.columns = ['ds', 'y']
-        model = Prophet()
-        model.fit(df)
-        future = model.make_future_dataframe(periods=(periods))
-        forecast = model.predict(future)
-        result = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
-        result = result[result['ds'] >= start]
-        result = result[result['ds'] <= end]
-        result.reset_index(drop=True, inplace=True)
-        result['ds'] = result['ds'].dt.strftime('%Y-%m-%d')
-        result = result[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
-        return loads(result.to_json(orient="records"))
-    except Exception as e:
-        print(str(e))
-    return None
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@app.get("/predict/weekly/{city}")
-async def predict_weekly(city: str):
-    return load_model(city)
-
-@app.get("/predict/range/{city}/{start}/{end}")
-async def predict_range(city: str, start: str, end: str):
-    return load_model(city.lower(), start=dt.datetime.strptime(start, '%Y-%m-%d'), end=dt.datetime.strptime(end, '%Y-%m-%d'))
-
-@app.get("/history/{city}/{year}")
-async def history(city: str, year: str):
-    try:
-        city = city.lower()
-        addDataToDB(city)
-        data = fetchDataFromDB(city)
-        data = data.sort_index()
-        data['date'] = data['date'].dt.strftime('%Y-%m-%d')
-        data = data[data['date'].str.contains(year)]
-        data.reset_index(drop=True, inplace=True)
-        data = data.sort_values(by='date')
-        return loads(data.to_json(orient="records"))
-    except Exception as e:
-        print(str(e))
-    return None
-
 def addDataToDB(city:str):
     try:
         city.lower()
@@ -135,6 +76,73 @@ def fetchDataFromDB(city:str):
     except Exception as e:
         print(str(e))
     return None
+
+def load_data(city):
+        city = city.lower()
+        addDataToDB(city)
+        data = fetchDataFromDB(city)
+        y_col = 'pm25'
+        data.dropna(subset=[y_col], inplace=True)
+        df = data[['date', y_col]]
+        df.columns = ['ds', 'y']
+        model = Prophet()
+        model.fit(df)
+        future = model.make_future_dataframe(periods=(100*365))
+        forecast = model.predict(future)
+        return forecast
+
+data = {'bangkok':load_data('bangkok'),
+        'chiang-mai':load_data('chiang-mai'),
+        'nonthaburi':load_data('nonthaburi'),
+        'samutprakan':load_data('samutprakan'),
+        }
+
+def load_model(city,
+                start=now(),
+                end=now() + dt.timedelta(days=7),
+                ):
+    try:
+        forecast = data[city]
+        result = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
+        result = result[result['ds'] >= start]
+        result = result[result['ds'] <= end]
+        result.reset_index(drop=True, inplace=True)
+        result['ds'] = result['ds'].dt.strftime('%Y-%m-%d')
+        result = result[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
+        return loads(result.to_json(orient="records"))
+    except Exception as e:
+        print(str(e))
+    return None
+
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+@app.get("/predict/weekly/{city}")
+async def predict_weekly(city: str):
+    return load_model(city)
+
+@app.get("/predict/range/{city}/{start}/{end}")
+async def predict_range(city: str, start: str, end: str):
+    return load_model(city.lower(), start=dt.datetime.strptime(start, '%Y-%m-%d'), end=dt.datetime.strptime(end, '%Y-%m-%d'))
+
+@app.get("/history/{city}/{year}")
+async def history(city: str, year: str):
+    try:
+        city = city.lower()
+        addDataToDB(city)
+        data = fetchDataFromDB(city)
+        data = data.sort_index()
+        data['date'] = data['date'].dt.strftime('%Y-%m-%d')
+        data = data[data['date'].str.contains(year)]
+        data.reset_index(drop=True, inplace=True)
+        data = data.sort_values(by='date')
+        return loads(data.to_json(orient="records"))
+    except Exception as e:
+        print(str(e))
+    return None
+
 
 @app.get("/test")
 async def test():
