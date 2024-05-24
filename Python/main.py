@@ -87,7 +87,7 @@ def load_data(city):
         df.columns = ['ds', 'y']
         model = Prophet()
         model.fit(df)
-        future = model.make_future_dataframe(periods=(100*365))
+        future = model.make_future_dataframe(periods=(10*365))
         forecast = model.predict(future)
         return forecast
 
