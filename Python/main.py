@@ -22,7 +22,10 @@ db = client.get_database('InsightfulAqiForecast')
 origins = [
     "http://localhost:5173",
     "http://localhost:8080",
-    "https://insightful-aqi-forecast-8rx92cz0f-oceannnxs-projects.vercel.app/"
+    "https://insightful-aqi-forecast-8rx92cz0f-oceannnxs-projects.vercel.app/",
+    "https://insightful-aqi-forecast-hh3p96m2g-oceannnxs-projects.vercel.app/",
+    "https://insightful-aqi-forecast-git-main-oceannnxs-projects.vercel.app/",
+    "https://insightful-aqi-forecast-oceannnxs-projects.vercel.app/",
 ]
 
 app.add_middleware(
