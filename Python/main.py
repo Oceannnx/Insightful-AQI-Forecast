@@ -30,6 +30,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    allow_origin_regex='https://insightful-aqi-forecast.vercel.app/'
 )
 
 def now():
