@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export const AxiosLib = axios.create({
-	baseURL: import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:8000',
+	baseURL: import.meta.env.VITE_BACKEND_URL ?? 'https://insightful-aqi-forecast.onrender.com',
 	withCredentials: true
 });
