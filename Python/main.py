@@ -121,7 +121,7 @@ async def root():
 
 @app.get("/predict/weekly/{city}")
 async def predict_weekly(city: str):
-    return load_model(city)
+    return load_model(city.lower())
 
 @app.get("/predict/range/{city}/{start}/{end}")
 async def predict_range(city: str, start: str, end: str):
