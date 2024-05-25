@@ -20,7 +20,8 @@ client = pymongo.MongoClient(MONGODB_URL)
 db = client.get_database('InsightfulAqiForecast')
 
 origins = [
-    "*"
+    "http://localhost",
+    "https://insightful-aqi-forecast.vercel.app/",
 ]
 
 app.add_middleware(
