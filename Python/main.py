@@ -21,16 +21,17 @@ db = client.get_database('InsightfulAqiForecast')
 
 origins = [
     "http://localhost:5173",
-    "https://insightful-aqi-forecast.vercel.app/",
+    "http://localhost:8080",
+    "https://insightful-aqi-forecast-8rx92cz0f-oceannnxs-projects.vercel.app/",
+    "https://insightful-aqi-forecast.vercel.app/"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    allow_origin_regex='https://insightful-aqi-forecast.vercel.app/'
 )
 
 def now():
