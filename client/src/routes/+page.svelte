@@ -11,14 +11,14 @@
 </script>
 
 <main class="overflow-x-hidden scroll-smooth">
-	{#if !data.visited}
+	{#if data.visited}
 		<body>
 			<img class="w-screen h-screen -z-10 absolute blur" src={imgUrl} alt="Bangkok City" />
 			<div class="w-screen h-screen flex flex-col justify-center items-center p-10">
-				<h1 class="text-7xl font-bold py-3 text-background">Insightful AQI Forecast</h1>
+				<h1 class="lg:text-7xl font-bold py-3 text-background text-4xl">Insightful AQI Forecast</h1>
 				<div class="py-6">
 					<button
-						class="text-4xl p-3 rounded-2xl bg-white bg-opacity-50 hover:bg-opacity-70"
+						class="lg:text-4xl p-3 rounded-2xl bg-white bg-opacity-50 hover:bg-opacity-70 text-lg"
 						on:click={handleStarterButton}>เริ่มต้นใช้งาน</button
 					>
 				</div>
