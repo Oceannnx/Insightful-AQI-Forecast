@@ -11,7 +11,7 @@
 </script>
 
 <main class="overflow-x-hidden scroll-smooth">
-	{#if data.visited}
+	{#if !data.visited}
 		<body>
 			<img class="w-screen h-screen -z-10 absolute blur" src={imgUrl} alt="Bangkok City" />
 			<div class="w-screen h-screen flex flex-col justify-center items-center p-10">
