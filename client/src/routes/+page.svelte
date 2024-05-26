@@ -26,10 +26,10 @@
 		</body>
 	{:else}
 		<main class="w-screen h-auto grid grid-cols-6">
-			<div class=" bg-sky-800 col-span-1 hidden lg:block">
+			<div class=" bg-sky-800 col-span-1 hidden lg:block w-full">
 				<div><Sidebar /></div>
 			</div>
-			<div class="col-span-5 bg-neutral-100">
+			<div class="lg:col-span-5 bg-neutral-100 w-full col-span-6">
 				<Content />
 			</div>
 		</main>

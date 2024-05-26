@@ -38,9 +38,11 @@
 	}
 </script>
 
-<main class="flex rounded-md bg-neutral-300 drop-shadow-2xl w-3/4 h-fit p-10 flex-col">
-	<div class="text-3xl">เลือกช่วงเวลาพยากรณ์</div>
-	<div class="flex justify-end gap-5">
+<main
+	class="flex rounded-md bg-neutral-300 drop-shadow-2xl lg:w-3/4 h-1/4 w-full md:w-4/5 p-10 flex-col"
+>
+	<div class="lg:text-3xl text-xl">เลือกช่วงเวลาพยากรณ์</div>
+	<div class="lg:flex justify-end gap-5 grid grid-cols-1">
 		<input
 			class="p-2 rounded-md"
 			type="date"
@@ -49,18 +51,18 @@
 		/>
 		<input class="p-2 rounded-md" type="date" min={startDate} bind:value={endDate} />
 		<input
-			class="p-2 px-5 border rounded-md"
+			class="p-2 px-5 rounded-md hover:bg-neutral-100 bg-neutral-200 transition-colors"
 			type="button"
 			value="พยากรณ์"
 			on:click={fetchPredictRangeData}
 		/>
 	</div>
 	<div class="grid grid-cols-3 py-5">
-		<p class="grid place-content-center">วันที่</p>
-		<p class="grid place-content-center">ค่าเฉลี่ย AQI</p>
+		<p class="grid place-content-center text-sm text-center lg:text-lg">วันที่</p>
+		<p class="grid place-content-center text-sm text-center lg:text-lg">ค่าเฉลี่ย AQI</p>
 		<div class="grid grid-cols-2">
-			<p class="grid place-content-center">ค่าต่ำสุด</p>
-			<p class="grid place-content-center">ค่าสูงสุด</p>
+			<p class="grid place-content-center text-sm text-center lg:text-lg">ค่าต่ำสุด</p>
+			<p class="grid place-content-center text-sm text-center lg:text-lg">ค่าสูงสุด</p>
 		</div>
 	</div>
 	<div>
@@ -75,15 +77,29 @@
 				<div class="h-72 overflow-y-auto flex flex-col gap-2">
 					{#each data as item}
 						<div class="grid grid-cols-3 rounded-md {colorAqi(item.yhat)}">
-							<p class="grid place-content-center">{formatDate(item.ds)}</p>
-							<p class="grid place-content-center p-2 {colorAqi(item.yhat)}">
+							<p class="grid place-content-center text-sm text-center lg:text-lg">
+								{formatDate(item.ds)}
+							</p>
+							<p
+								class="grid place-content-center p-2 text-sm text-center lg:text-lg {colorAqi(
+									item.yhat
+								)}"
+							>
 								{Math.ceil(item.yhat)}
 							</p>
 							<div class="grid grid-cols-2">
-								<p class="grid place-content-center {colorAqi(item.yhat_lower)}">
+								<p
+									class="grid place-content-center text-sm text-center lg:text-lg {colorAqi(
+										item.yhat_lower
+									)}"
+								>
 									{Math.ceil(item.yhat_lower)}
 								</p>
-								<p class="grid place-content-center {colorAqi(item.yhat_upper)}">
+								<p
+									class="grid place-content-center text-sm text-center lg:text-lg {colorAqi(
+										item.yhat_upper
+									)}"
+								>
 									{Math.ceil(item.yhat_upper)}
 								</p>
 							</div>

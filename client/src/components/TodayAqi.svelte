@@ -23,7 +23,7 @@
 	}
 </script>
 
-<main class="w-3/4 h-1/4">
+<main class="lg:w-3/4 h-1/4 w-full md:w-4/5">
 	{#await data}
 		<div class="h-72 bg-slate-400 grid place-items-center">
 			<div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-slate-300"></div>

@@ -26,15 +26,17 @@
 	}
 </script>
 
-<main class="flex rounded-md w-3/4 h-1/4 flex-col bg-neutral-300 drop-shadow-2xl">
-	<div class="text-3xl px-10 pt-5">พยากรณ์คุณภาพอากาศ 1 อาทิตย์</div>
+<main
+	class="flex rounded-md lg:w-3/4 h-1/4 w-full md:w-4/5 flex-col bg-neutral-300 drop-shadow-2xl"
+>
+	<div class="lg:text-3xl px-10 pt-5 text-xl">พยากรณ์คุณภาพอากาศ 1 อาทิตย์</div>
 	<div class="py-5 px-10 pb-10">
 		<div class="grid grid-cols-3 pb-5">
-			<p class="grid place-content-center">วันที่</p>
-			<p class="grid place-content-center">ค่าเฉลี่ย AQI</p>
+			<p class="grid place-content-center text-sm text-center lg:text-lg">วันที่</p>
+			<p class="grid place-content-center text-sm text-center lg:text-lg">ค่าเฉลี่ย AQI</p>
 			<div class="grid grid-cols-2">
-				<p class="grid place-content-center">ค่าต่ำสุด</p>
-				<p class="grid place-content-center">ค่าสูงสุด</p>
+				<p class="grid place-content-center text-sm text-center lg:text-lg">ค่าต่ำสุด</p>
+				<p class="grid place-content-center text-sm text-center lg:text-lg">ค่าสูงสุด</p>
 			</div>
 		</div>
 		{#await data}
@@ -47,8 +49,14 @@
 			<div class="flex flex-col gap-2">
 				{#each result as item}
 					<div class="grid grid-cols-3 rounded-md {colorAqi(item.yhat)}">
-						<p class="grid place-content-center">{formatDate(item.ds)}</p>
-						<p class="grid place-content-center p-2 {colorAqi(item.yhat)}">
+						<p class="grid place-content-center text-sm text-center lg:text-lg">
+							{formatDate(item.ds)}
+						</p>
+						<p
+							class="grid place-content-center p-2 text-sm text-center lg:text-lg {colorAqi(
+								item.yhat
+							)}"
+						>
 							{Math.ceil(item.yhat)}
 						</p>
 						<div class="grid grid-cols-2">
