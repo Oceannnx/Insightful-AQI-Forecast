@@ -12,7 +12,7 @@
 	let endDate: any;
 
 	const fetchPredictRangeData = async () => {
-		if (startDate > endDate || startDate <= new Date().toISOString().split('T')[0]) {
+		if (startDate > endDate || startDate < new Date().toISOString().split('T')[0]) {
 			Swal.fire({
 				icon: 'error',
 				title: 'Error',
