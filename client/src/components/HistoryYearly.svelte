@@ -35,14 +35,14 @@
 </script>
 
 <main
-	class="flex rounded-md bg-neutral-300 drop-shadow-2xl lg:w-3/4 h-1/4 w-full md:w-4/5 p-10 flex-col"
+	class="flex rounded-md bg-neutral-300 drop-shadow-2xl xl:w-3/4 h-1/4 w-full md:w-4/5 p-10 flex-col"
 >
-	<div class="grid lg:grid-cols-2 grid-cols-1">
+	<div class="grid xl:grid-cols-2 grid-cols-1">
 		<div class="w-full">
-			<h1 class="lg:text-3xl text-xl">ประวัติคุณภาพอากาศ</h1>
-			<h2 class="lg:text-2xl text-md">{city.label}</h2>
+			<h1 class="xl:text-3xl text-xl">ประวัติคุณภาพอากาศ</h1>
+			<h2 class="xl:text-2xl text-md">{city.label}</h2>
 		</div>
-		<div class="flex lg:justify-end items-center gap-5 px-5 justify-around">
+		<div class="flex xl:justify-end items-center gap-5 px-5 justify-around">
 			<select bind:value={month} class="p-2 h-fit rounded-md">
 				{#each monthTH as month (month.monthId)}
 					<option value={month.monthId}>{month.month}</option>
