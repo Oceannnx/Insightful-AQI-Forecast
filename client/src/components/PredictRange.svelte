@@ -12,7 +12,7 @@
 	let endDate: any;
 
 	const fetchPredictRangeData = async () => {
-		if (startDate > endDate{
+		if (startDate > endDate){
 			Swal.fire({
 				icon: 'error',
 				title: 'Error',
