@@ -56,7 +56,7 @@
 					</div>
 				</h1>
 				<div class="xl:px-5">
-					<h2 class="xl:text-3xl text-2xl">{city.label}</h2>
+					<h2 class="xl:text-3xl text-2xl">AQI ของ {city.label}</h2>
 					<h3>
 						อัพเดตล่าสุด : {formatDate(data.time.s)},
 						{new Date(data.time.s).getHours()}:00 น.
